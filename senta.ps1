@@ -1889,11 +1889,29 @@
 # This is a comment
 # This is a comment
 
-Add-Content "$env:TEMP\sentabiose.txt" "Hello from Sentabiose team"
-Start-Sleep -Seconds 2
-Start-Process cmd -ArgumentList "/c timeout /t 1 >nul"
-Start-Sleep -Seconds 2
-Start-Process cmd -ArgumentList "/k echo Accepted"
+# Step 1: Show text in CMD with colors
+Start-Process cmd -ArgumentList '/c color 0a && echo AD72 ACTIVATED && echo OBJET DETECTE : WINDOWS 11 && timeout /t 5'
+
+Start-Sleep -Seconds 6
+
+# Step 2: Open 10 quick cmd flashes (close after 0.5s)
+for ($i = 1; $i -le 10; $i++) {
+    Start-Process cmd -ArgumentList '/c echo Flash $i && timeout /t 1 >nul'
+    Start-Sleep -Milliseconds 500
+}
+
+# Step 3: Download the PNG
+$imgPath = "$env:TEMP\testimage.png"
+Invoke-WebRequest -Uri "https://cdn.discordapp.com/attachments/1106537994061619240/1412150919801471046/pIUk6nh.png?ex=68b73f87&is=68b5ee07&hm=3cac4cac67cccc4e22cb1848c3f0d1202e7582f75fc69c90e6ad06317ecb1565&" -OutFile $imgPath
+
+# Step 4: Open the image (you can press F11 to fullscreen in Photos)
+Start-Process $imgPath
+
+Start-Sleep -Seconds 3
+
+# Step 5: Fullscreen cmd spamming text (stop with Ctrl+C)
+Start-Process cmd -ArgumentList '/k mode con: cols=200 lines=60 && :loop && echo this was a test && goto loop'
+
 # This is a comment
 # This is a comment
 # This is a comment
